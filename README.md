@@ -7,7 +7,7 @@ Toggler will toggle time entry to toggl track from your akashi timestamp log.
 - Python 3.9+
 - pip
   - requests
-- [fzf](https://github.com/junegunn/fzf) (Optional.)
+- [fzf](https://github.com/junegunn/fzf) (Optional)
 
 ## toggler.py
 
@@ -44,4 +44,4 @@ optional arguments:
 ## copy-log.sh
 
 This will collect your command log from logs folder using fzf command.
-select your command and press Enter to get your previous command to your clipboard.
+Select your command and press Enter to get your previous command to your clipboard.
