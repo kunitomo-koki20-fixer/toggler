@@ -9,6 +9,7 @@ import csv
 from zoneinfo import ZoneInfo
 from argparse import ArgumentParser
 
+
 def get_workspace_id(api_token):
     r = requests.get('https://www.toggl.com/api/v8/workspaces',
                      auth=(api_token, 'api_token'))
@@ -58,7 +59,6 @@ def get_records(akashi_token, company_id, start_date, end_date):
     print(res.status_code)
     l_time = [dt.strptime(d.get('stamped_at'), '%Y/%m/%d %H:%M:%S').replace(
         tzinfo=ZoneInfo("Asia/Tokyo")) for d in res.json()['response']['stamps']]
-    pprint.pprint(l_time)
     times = []
     for i in range(len(l_time)-1):
         a = [item for item in times if l_time[i] in item]
@@ -77,20 +77,6 @@ def toggle_oneday(day, start, end, work_id, token):
     post_entries(token, True, work_id, dur1.seconds, start.isoformat())
     post_entries(token, False, break_project_id, 3600, lt_start.isoformat())
     post_entries(token, True, work_id, dur2.seconds, lt_end.isoformat())
-
-
-def toggle_with_csv():
-    tokyo = ZoneInfo("Asia/Tokyo")
-    with open("dates.csv") as f:
-        reader = csv.reader(f)
-        for l in reader:
-            day = dt.strptime(
-                l[0], '%Y-%m-%d').replace(tzinfo=tokyo)
-            start = dt.strptime(
-                l[0]+l[1], '%Y-%m-%d%H:%M').replace(tzinfo=tokyo)
-            end = dt.strptime(
-                l[0]+l[2], '%Y-%m-%d%H:%M').replace(tzinfo=tokyo)
-            toggle_oneday(day, start, end, hox002, toggl_token)
 
 
 def toggle_with_akashiApi(start, end):
@@ -123,16 +109,19 @@ def get_option():
                            help='Company Id.')
     argparser.add_argument('-s', '--start', type=int,
                            default=start,
-                           help='Start Date for auto inputting.')
+                           help='Start Date for auto input.')
     argparser.add_argument('-e', '--end', type=str,
                            default=end,
-                           help='End Date for auto inputting.')
+                           help='End Date for auto input.')
     return argparser.parse_args()
 
+
 def save_command_log():
-    f = open("logs/command-log-{}.txt".format(dt.now().strftime("%Y-%m-%d_%H:%M:%S")),'a')
+    f = open(
+        "logs/command-log-{}.txt".format(dt.now().strftime("%Y-%m-%d_%H:%M:%S")), 'a')
     f.write('python3 ' + ' '.join(sys.argv) + '\n')
     f.close()
+
 
 if __name__ == '__main__':
     toggl_token = 'token'
@@ -143,7 +132,7 @@ if __name__ == '__main__':
     company_id = "companyid"
     start = 20201210000000
     end = 20201220000000
-    #yyyyMMddHHmmss   
+    # yyyyMMddHHmmss
 
     args = get_option()
 
