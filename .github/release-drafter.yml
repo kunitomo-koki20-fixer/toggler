@@ -1,0 +1,16 @@
+name-template: 'v$NEXT_PATCH_VERSION'
+tag-template: 'v$NEXT_PATCH_VERSION'
+categories:
+  - title: '新機能'
+    labels: 'enhancement'
+  - title: '外部指摘'
+      labels: '外部指摘'
+  - title: 'バグ修正'
+    labels: 'bug'
+  - title: '依存関係'
+    labels: 'dependencies'
+exclude-labels:
+  - 'documentation'
+change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
+template: |
+  $CHANGES
